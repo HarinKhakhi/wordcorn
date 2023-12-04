@@ -1,3 +1,4 @@
+import sys
 import logging
 import json
 from datetime import datetime
@@ -49,10 +50,6 @@ def get_ghost_story(logger, word):
             model = Settings.model,
             messages=[
                 {
-                    "role": "system",
-                    "content": Settings.system_prompt
-                },
-                {
                     "role": "user", 
                     "content": Settings.user_prompt(word)
                 }
@@ -76,5 +73,11 @@ def get_ghost_story(logger, word):
         raise
 
 if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('usage: python api.py your_word_goes_here')
+        exit(1)
+
+    word = sys.argv[1]
     ghost_story = get_ghost_story(logger, 'abeyance')
+    print(f'ghost story created using word "{word}",')
     print(ghost_story)
