@@ -1,0 +1,36 @@
+I have a json word template as given below, if I give you one word at a time can you fill them according to following template -  
+{
+  "wordId": 1,
+  "word": "Wayward",
+  "meanings": [
+    {
+      "type": "adjective",
+      "meaning": "difficult to control or predict because of unusual or erratic behavior; deviating from the expected or conventional course; willful or disobedient."
+    }
+  ],
+  "synonyms": ["rebellious", "erratic", "unpredictable"],
+  "mnemonics": [
+    {
+      "mnemonicId": 1,
+      "mnemonic": "Think of 'wayward' as 'way-' (related to 'path') + '-ward' (direction) - deviating from the expected path or direction."
+    },
+    {
+      "mnemonicId": 2,
+      "mnemonic": "Imagine a wayward child who consistently strays from the rules, displaying unpredictable and rebellious behavior."
+    }
+  ],
+  "story": "The wayward river carved a unique and unpredictable path through the landscape, defying the usual course of waterways.",
+  "media": [],
+  "usage": [
+    "The wayward teenager challenged authority at every turn, often engaging in rebellious activities.",
+    "The project faced setbacks due to the wayward decisions of a key team member, leading to unexpected complications."
+  ],
+  "tags": ["Rebellious", "Erratic", "Unpredictable"],
+  "difficultyScore": 2,
+  "question": {
+    "question": "The novel's protagonist was a ________ character, constantly making choices that surprised both the other characters and the readers.",
+    "options": ["predictable", "wayward", "disciplined", "steadfast"],
+    "correctAnswer": "wayward"
+  },
+  "video": {}
+}

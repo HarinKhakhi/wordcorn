@@ -1,0 +1,9 @@
+{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+        {
+            "role": "system",
+            "content": "./assets/system_prompt.txt"
+        }
+    ]
+}
