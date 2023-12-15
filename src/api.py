@@ -4,8 +4,8 @@ import json
 from fastapi import FastAPI
 from openai import OpenAI
 
-import src.utils as utils
-from src.models import ConfigurationModel
+import utils as utils
+from models import ConfigurationModel
 
 ###################### Configuration ###################### 
 load_dotenv()

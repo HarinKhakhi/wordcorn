@@ -3,7 +3,7 @@ from os import path
 import json
 import logging
 
-from src.models import ConfigurationModel, MessageModel
+from models import ConfigurationModel
 
 def load_configuration(file = './assets/default_config.json'):
     if not path.isfile(file):
