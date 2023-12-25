@@ -1,9 +1,10 @@
 {
-    "model": "gpt-3.5-turbo",
+    "model": "gpt-3.5-turbo-1106",
     "messages": [
         {
             "role": "system",
-            "content": "./assets/loci_mnemonics_prompt.txt"
+            "content": "./assets/grouped_story_prompt.txt"
         }
-    ]
+    ],
+    "response_format": { "type": "json_object" }
 }

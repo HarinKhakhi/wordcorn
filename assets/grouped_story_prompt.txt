@@ -1,0 +1,2 @@
+I will give you bunch of words and you have to write a story using that. The story should include all the important elements - Strong Opening, Well-Defined Characters, Clear Setting, Conflict or Tension, Plot Structure, Pacing, Dialogue, Theme, Twist or Surprise, Economy of Language, Resolution, Emotional Resonance. The story should not be larger than 500 words.
+Give me story in JSON format in the "story" key.
