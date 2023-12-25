@@ -15,7 +15,7 @@ TOTAL_THREADS = 10
 wordlist_file = sys.argv[1]
 output_dir = sys.argv[2]
 output_file = sys.argv[3]
-override_data = sys.argv[4] == 'true'
+operation_mode = sys.argv[4]
 if not os.path.isdir(output_dir): os.makedirs(output_dir)
 
 load_dotenv()
@@ -40,10 +40,10 @@ def get_wordlist(input_file):
 
 
 def perform_task(word):
-    global output_dir, override_data, current_config, logger, openai_client
+    global output_dir, operation_mode, current_config, logger, openai_client
 
     # check if already requested
-    if (not override_data) and os.path.isfile(f'{output_dir}/{word}.txt'):
+    if (operation_mode != 'override') and os.path.isfile(f'{output_dir}/{word}.txt'):
         return
 
     # setting up configuration
@@ -89,7 +89,9 @@ def combine_results(input_dir, output_file):
 ###########################################################
 
 wordlist = get_wordlist(wordlist_file)
-for start_i in tqdm(range(0, len(wordlist), TOTAL_THREADS)):
+total_count = len(wordlist) if operation_mode != 'test' else TOTAL_THREADS
+
+for start_i in tqdm(range(0, total_count, TOTAL_THREADS)):
     threads = []
     for word in wordlist[start_i: start_i+TOTAL_THREADS]:
         thread = threading.Thread(target=perform_task, args=(word, ))
