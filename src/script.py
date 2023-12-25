@@ -4,14 +4,19 @@ import json
 from tqdm import tqdm
 from dotenv import load_dotenv
 from copy import deepcopy
+import threading
 
 from openai import OpenAI
 import utils as utils
 
 ###################### Configuration ###################### 
-input_file = sys.argv[1]
+TOTAL_THREADS = 10
+
+wordlist_file = sys.argv[1]
 output_dir = sys.argv[2]
 output_file = sys.argv[3]
+override_data = sys.argv[4] == 'true'
+if not os.path.isdir(output_dir): os.makedirs(output_dir)
 
 load_dotenv()
 
@@ -24,21 +29,23 @@ logger = utils.get_logger('script')
 logger.info('script started...')
 logger.info('current configuration: %s', current_config)
 ###########################################################
-if not os.path.isdir(output_dir): os.makedirs(output_dir)
 
-wordlist_file = open(input_file, encoding='utf-8')
-wordlist = wordlist_file.readlines()
-wordlist_file.close()
+############################ functions ############################ 
+def get_wordlist(input_file):
+    wordlist_file = open(input_file, encoding='utf-8')
+    wordlist = [word.strip().lower() for word in wordlist_file.readlines()]
+    wordlist_file.close()
 
-new_count = 0
-for line in tqdm(wordlist[:10]):
-    word = line.strip().lower()
+    return wordlist
+
+
+def perform_task(word):
+    global output_dir, override_data, current_config, logger, openai_client
 
     # check if already requested
-    if os.path.isfile(f'{output_dir}/{word}.txt'):
-        continue
+    if (not override_data) and os.path.isfile(f'{output_dir}/{word}.txt'):
+        return
 
-    new_count += 1
     # setting up configuration
     new_config = deepcopy(current_config)
     new_config['messages'].append({
@@ -59,20 +66,36 @@ for line in tqdm(wordlist[:10]):
     object_file.write(json_object)
     object_file.close()
 
-print(f'called openai api for {new_count} words')
 
-def get_data(file):
-    with open(file, 'r') as f: 
-        return str(f.read())
+def combine_results(input_dir, output_file):
+    def get_data(file):
+        try:
+            with open(file, 'r') as f: 
+                return json.load(f)
+        except:
+            print('not json:', word)
+            return {}
 
+    arr = []
+    for filename in os.listdir(input_dir):
+        obj = {
+            'word': filename.split('.')[0],
+            **get_data(os.path.join(input_dir, filename))
+        }
+        arr.append(obj)
 
-arr = []
-for filename in os.listdir(output_dir):
-    obj = {
-        'word': filename.split('.')[0],
-        'mnemonic': get_data(os.path.join(output_dir, filename))
-    }
-    arr.append(obj)
+    with open(output_file, 'w') as output:
+        json.dump(arr, output, indent=4)
+###########################################################
 
-with open(output_file, 'w') as output:
-    json.dump(arr, output, indent=4)
+wordlist = get_wordlist(wordlist_file)
+for start_i in tqdm(range(0, len(wordlist), TOTAL_THREADS)):
+    threads = []
+    for word in wordlist[start_i: start_i+TOTAL_THREADS]:
+        thread = threading.Thread(target=perform_task, args=(word, ))
+        thread.start()
+        threads.append(thread)
+
+    for thread in threads: thread.join()
+
+combine_results(output_dir, output_file)
