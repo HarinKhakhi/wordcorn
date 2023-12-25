@@ -3,7 +3,7 @@
     "messages": [
         {
             "role": "system",
-            "content": "./assets/mnemonics_prompt.txt"
+            "content": "./assets/loci_mnemonics_prompt.txt"
         }
     ]
 }

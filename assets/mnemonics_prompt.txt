@@ -1,1 +1,13 @@
-I will give you a word, you have to tell me an mnemonics to remember this words. It should start with word Imagine.
+I will give you a word. Create around 2 mnemonics for the word using visualization or emotional connection theme pattern. Return them in following format
+{
+    "mnemonics": [
+        {
+            "mnemonicId": 1,
+            "mnemonic": "Imagine a traffic signal going aberrant, showing all three colors simultaneously, breaking the usual pattern."
+        },
+        {
+            "mnemonicId": 2,
+            "mnemonic": "Visualize a person behaving in an aberrant manner, doing something completely unexpected and deviating from the norm."
+        }
+    ]
+}
