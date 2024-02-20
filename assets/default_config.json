@@ -3,7 +3,7 @@
     "messages": [
         {
             "role": "system",
-            "content": "./assets/grouped_story_prompt.txt"
+            "content": "./assets/antonyms_prompt.txt"
         }
     ],
     "response_format": { "type": "json_object" }

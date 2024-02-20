@@ -1,0 +1,4 @@
+I will give you a word and you have to give me antonym for that. Return antonym in the form of JSON in this format. 
+{
+    "antonym": "antonym here" 
+}

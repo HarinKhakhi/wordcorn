@@ -33,7 +33,7 @@ logger.info('current configuration: %s', current_config)
 ############################ functions ############################ 
 def get_wordlist(input_file):
     wordlist_file = open(input_file, encoding='utf-8')
-    wordlist = [word.strip().lower() for word in wordlist_file.readlines()]
+    wordlist = [word.strip().lower().replace(',', '') for word in wordlist_file.readlines()]
     wordlist_file.close()
 
     return wordlist
