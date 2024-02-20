@@ -1,4 +1,4 @@
-import sys
+import argparse
 import os
 import json
 from tqdm import tqdm
@@ -12,10 +12,18 @@ import utils as utils
 ###################### Configuration ###################### 
 TOTAL_THREADS = 10
 
-wordlist_file = sys.argv[1]
-output_dir = sys.argv[2]
-output_file = sys.argv[3]
-operation_mode = sys.argv[4]
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--wordlist', help='input wordlist')
+parser.add_argument('--output_dir', help='output directory path')
+parser.add_argument('--output_file', help='name of the file with all data combined (without ext)')
+parser.add_argument('--operation_mode', help='[test, override, reuse]')
+
+args = parser.parse_args()
+wordlist_file = args.wordlist 
+output_dir = args.output_dir
+output_file = args.output_file 
+operation_mode = args.operation_mode
 if not os.path.isdir(output_dir): os.makedirs(output_dir)
 
 load_dotenv()
@@ -43,7 +51,7 @@ def perform_task(word):
     global output_dir, operation_mode, current_config, logger, openai_client
 
     # check if already requested
-    if (operation_mode != 'override') and os.path.isfile(f'{output_dir}/{word}.txt'):
+    if (operation_mode == 'reuse') and os.path.isfile(f'{output_dir}/{word}.txt'):
         return
 
     # setting up configuration
