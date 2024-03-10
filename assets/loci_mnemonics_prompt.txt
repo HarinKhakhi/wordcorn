@@ -1,9 +1,0 @@
-Create a mnemonic for following word using the Loci (Memory Palace) Technique in following format
-{
-    "mnemonics": [
-        {
-            "mnemonicId": 1,
-            "mnemonic": "Imagine a traffic signal going aberrant, showing all three colors simultaneously, breaking the usual pattern."
-        }
-    ]
-} 
