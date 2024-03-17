@@ -276,3 +276,37 @@ class TagPrompt:
             'content': prompt
         }
     
+class DifficultyScorePrompt:
+    def __init__(self, word):
+        self.word = word
+
+    def get_prompt(self):
+        return [
+            self.system(),
+            self.user()
+        ]
+
+    def system(self):
+        prompt = '''
+            I am creating English Word Learning App.
+            You will be given a word and your task is to give me an integer value (in string format) in the range of 1 to 5 (inclusive) which represents the difficulty of the word
+            Return your response in the following json format
+            {
+                "word": "word here",
+                "difficultyScore": "integer score here"
+            }
+        '''
+        return {
+            'role': 'system',
+            'content': prompt
+        }
+    
+    def user(self):
+        prompt = f'''
+            the word is {self.word}.
+        '''
+
+        return {
+            'role': 'user',
+            'content': prompt
+        }
